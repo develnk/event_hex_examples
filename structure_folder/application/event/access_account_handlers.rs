@@ -25,9 +25,7 @@ impl DomainEventHandler<AccessAccountEvents> for ProjectionUpdaterEventHandler {
 
 #[async_trait]
 impl DomainEventHandlerFactory<AccessAccountEvents> for ProjectionUpdaterEventHandlerFactory {
-    async fn create(
-        &self,
-    ) -> Result<Box<dyn DomainEventHandler<AccessAccountEvents>>, DomainEventHandlerError> {
+    async fn create(&self) -> Result<Box<dyn DomainEventHandler<AccessAccountEvents>>, DomainEventHandlerError> {
         let client = get_initialized_mongodb_client().await;
         let repository =
             Arc::new(RwLock::new(MongoAccessAccountProjectionAdapter::new(client, "example").await?));

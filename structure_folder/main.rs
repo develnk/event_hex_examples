@@ -1,4 +1,3 @@
-#[cfg(feature = "mongo")]
 mod adapters;
 mod application;
 mod core;
