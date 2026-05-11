@@ -1,0 +1,48 @@
+[package]
+name = "hexagonal-structure"
+version = "0.1.0"
+edition = "2024"
+
+[[example]]
+name = "structure-folder"
+path = "structure_folder/main.rs"
+required-features = []
+
+[dependencies]
+tokio = { version = "1.52.3", features = ["full"], optional = true }
+serde_json = "1.0.149"
+serde = { version = "1.0.228", features = ["derive", "serde_derive"] }
+serde_with = { version = "3.18.0" }
+typed-builder = "0.23.2"
+derive-getters = "0.5.0"
+# Uuid generation
+uuid = { version = "1.23.1", features = ["serde", "v4", "fast-rng", "v7"] }
+# Time
+chrono = { version = "0.4.44", features = ["serde"] }
+# Build async trait
+# Builder pattern
+# Sql library for async impl
+sqlx = { version = "0.8.0", features = ["runtime-tokio-native-tls", "uuid", "json", "chrono"], optional = true }
+strum_macros = "0.28.0"
+event_hex = "0.0.1"
+async-trait = "0.1.89"
+# MongoDB
+bson = { version = "3.1.0", features = ["uuid-1", "serde_with-3", "serde"], optional = true }
+mongodb = { version = "3.6.0", features = ["bson-3"], optional = true }
+# Kafka library
+rdkafka = { version = "0.39.0", features = ["ssl-vendored"], optional = true }
+# Rabbit library
+lapin = { version = "4.7.2", optional = true }
+dotenvy = "0.15.7"
+config = "0.15.22"
+
+[dev-dependencies]
+tokio = { version = "1.52.3", features = ["full"] }
+mockall = "0.14"
+
+[features]
+default = []
+postgres = ["sqlx", "sqlx/postgres", "tokio"]
+mongo = ["mongodb", "bson"]
+kafka = ["rdkafka"]
+rabbit = ["lapin"]
