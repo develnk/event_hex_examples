@@ -17,7 +17,7 @@ static APP_STATE: OnceLock<Arc<AppState>> = OnceLock::new();
 
 #[derive(Clone, Getters)]
 pub struct AppState {
-    // Сервисы всех модулей нужно зарегистрировать здесь
+    // Services of all modules must be registered here
     // user_service: Arc<UserApplicationService>,
     identity_service: Arc<IdentityApplicationService>,
 }
@@ -29,15 +29,9 @@ impl AppState {
         let event_bus = get_event_bus();
         let client = get_initialized_mongodb_client().await;
         let app_settings = get_app_settings();
-        // Конфигурация сервисов
-        let access_account_read_projection_repository: Arc<
-            dyn AccessAccountReadProjectionRepository,
-        > = Arc::new(
-            MongoAccessAccountReadProjectionAdapter::new(
-                Arc::clone(&client),
-                app_settings.database.dbname.as_str(),
-            )
-                .await,
+        // Service configuration
+        let access_account_read_projection_repository: Arc<dyn AccessAccountReadProjectionRepository, > = Arc::new(
+            MongoAccessAccountReadProjectionAdapter::new(Arc::clone(&client), app_settings.database.dbname.as_str()).await,
         );
         let tx_manager = Arc::new(MongoTransactionManager::new(Arc::clone(&client)).await);
 
