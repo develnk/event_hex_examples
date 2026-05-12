@@ -1,3 +1,3 @@
 /*
-   Обработчики запросов (реализации интерфейсов из core/domain/.../port/inbound)
+   Query handlers (implementations of interfaces from core/domain/.../port/inbound)
 */

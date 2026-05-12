@@ -1,7 +1,7 @@
 pub mod access_account;
 /**
- * Этот пакет содержит Агрегат(Aggregate - Root Aggregate) и связанный с ним объекты-сущности(entity objects) и объекты-значения(Value Objects).
- * Агрегат = Самый главный идентификатор конкретного ограниченного контекста.
+ * This package contains the Aggregate (Root Aggregate) and its related entity objects and value objects.
+ * Aggregate = The main identifier of a specific bounded context.
  * @author Nikolay
  */
 pub mod entity;

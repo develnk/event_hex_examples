@@ -13,7 +13,7 @@ use std::sync::Arc;
 #[serde(
     tag = "type",
     content = "data"
-)] // Это создаст структуру { "type": "Created", "data": { ... } }
+)] // This will create a structure { "type": "Created", "data": { ... } }
 pub enum AccessAccountEvents {
     #[serde(rename = "AccessAccountCreatedEvent")]
     Created(AccessAccountCreateVersioned),

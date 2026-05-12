@@ -1,3 +1,3 @@
 /*
-* Адаптеры для внешних API (например, Email, SMS)
+* Adapters for external APIs (e.g., Email, SMS)
 */

@@ -39,13 +39,13 @@ impl ProjectionRepository for MongoAccessAccountProjectionAdapter {
                     let event = e.to_latest();
                     let new_doc = AccessAccountProjectionDto::from(event);
                     let options = ReplaceOptions::builder().upsert(true).build();
-                    // Используем replace_one с upsert=true, чтобы создать, если не существует
+                    // Use replace_one with upsert=true to create if it doesn't exist
                     self.collection.replace_one(filter, new_doc).with_options(options).await?;
                 }
                 AccessAccountEvents::Updated(e) => {
                     let access_account = self.collection.find_one(filter.clone()).await?;
                     if let Some(mut account) = access_account {
-                        // Применить событие к DTO проекции агрегата, чтобы обновить поля и потом сохранить в БД
+                        // Apply the event to the aggregate projection DTO to update fields and then save to DB
                         account.apply_event_to_dto(event).await?;
                         self.collection.replace_one(filter, account).await?;
                     }
@@ -56,11 +56,11 @@ impl ProjectionRepository for MongoAccessAccountProjectionAdapter {
         Ok(())
     }
     async fn rebuild(&mut self, id: &EntityId, stream: Vec<&dyn DomainEvent>) -> Result<(), ProjectionError> {
-        // Удаляем проекцию.
+        // Delete the projection.
         let filter = doc! { "_id": id};
         self.collection.delete_one(filter).await?;
 
-        // Проигрываем все события заново
+        // Replay all events
         for event in stream {
             self.apply_event(id, event).await?;
         }

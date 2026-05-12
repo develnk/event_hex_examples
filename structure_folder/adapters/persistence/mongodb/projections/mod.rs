@@ -1,6 +1,6 @@
 /*
-* Адаптеры для чтения (Read Models).
-* Здесь также реализована логика для обновления хранилища чтения.
+* Adapters for reading (Read Models).
+* This also implements the logic for updating the read store.
 */
 pub mod dto;
 pub mod mapper;

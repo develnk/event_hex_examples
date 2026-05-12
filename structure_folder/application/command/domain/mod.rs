@@ -1,4 +1,4 @@
 /*
-* Для удобства команды сгруппированы по доменам.
+* For convenience, commands are grouped by domain.
 */
 pub mod identity;

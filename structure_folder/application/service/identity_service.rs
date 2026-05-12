@@ -33,7 +33,7 @@ impl IdentityApplicationService {
     }
 
     pub async fn register_tg_identity_service(&self, user_dto: UserDTO) -> Result<Uuid, AppError> {
-        // Клонируем все необходимые данные перед вызовом транзакции, чтобы передать владение (ownership) внутрь 'static замыкания.
+        // Clone all necessary data before calling the transaction to pass ownership into the 'static closure.
         let user = user_dto.clone();
         let event_bus = self.event_bus.clone();
         let mut all_events: Vec<Box<dyn DomainEvent>> = Vec::with_capacity(5);
@@ -44,7 +44,7 @@ impl IdentityApplicationService {
             self.create_new_access_account(user, &mut all_events).await?
         };
 
-        // Опубликовать доменные события, с помощью Издателя доменных событий.
+        // Publish domain events using the Domain Event Publisher.
         for event in all_events {
             event_bus.publish(&*event).await.map_err(|e| AppError::from(EventHexError::from(e)))?;
         }
@@ -57,7 +57,7 @@ impl IdentityApplicationService {
     }
 
     async fn create_new_access_account(&self, new_user: UserDTO, events: &mut Vec<Box<dyn DomainEvent>>) -> Result<Uuid, AppError> {
-        // Клонируем данные для перемещения в async block
+        // Clone data for moving into async block
         let command_bus = self.command_bus.clone();
         let first_name = new_user.first_name().to_owned();
         let last_name = new_user.last_name().to_owned();
@@ -66,7 +66,7 @@ impl IdentityApplicationService {
         let (account_id, new_events) = self
             .tx_manager
             .run(move |ctx| {
-                // Клонируем переменные для перемещения во внутренний async блок
+                // Clone variables for moving into the inner async block
                 let cb = command_bus.clone();
 
                 Box::pin(async move {
@@ -76,12 +76,12 @@ impl IdentityApplicationService {
                         email,
                     };
 
-                    // Возвращаем результат как Ok
+                    // Return the result as Ok
                     Ok(cb.dispatch(Box::new(create_account_command), Some(ctx)).await?)
                 })
             })
             .await?;
-        // Добавляем события в общий список снаружи транзакции
+        // Add events to the common list outside the transaction
         events.extend(new_events);
 
         Ok(account_id.as_uuid())

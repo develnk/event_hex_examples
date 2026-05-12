@@ -6,15 +6,15 @@ use tokio::sync::OnceCell;
 use crate::core::identity_access_management::identity::event::access_account_events::AccessAccountEvents;
 
 
-//Статическое хранилище (используем lazy_static или once_cell)
+// Static storage (using lazy_static or once_cell)
 static EVENT_BUS: OnceCell<Arc<EventBus>> = OnceCell::const_new();
 pub async fn event_bus_init() {
     let event_bus = EVENT_BUS.get_or_init(|| async { Arc::new(EventBus::new()) }).await;
 
-    // Регистрируем обработчики событий
+    // Register event handlers
 
-    // Для обновления проекций агрегатов, необходимо для каждого доменного события зарегистрировать
-    // обработчик обновления проекции.
+    // To update aggregate projections, a projection update handler must be registered
+    // for each domain event.
     event_bus.register_handler::<AccessAccountEvents, _>(ProjectionUpdaterEventHandlerFactory::new()).await;
 }
 

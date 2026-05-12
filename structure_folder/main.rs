@@ -22,7 +22,7 @@ async fn start_initialization() {
     let _ = AppSettings::init();
     db::init().await;
 
-    // Инициализация внутренних шин
+    // Initialization of internal buses
     event_bus_init().await;
     command_bus_init().await;
     query_bus_init().await;

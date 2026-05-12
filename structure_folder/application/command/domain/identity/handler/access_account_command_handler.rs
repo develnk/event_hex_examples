@@ -58,7 +58,7 @@ where
                     .map_err(CommandHandlerError::from)?;
 
                 let mut container = AggregateContainer::new(access_account);
-                // Применить событие к агрегату и отправить его в очередь на публикацию
+                // Apply the event to the aggregate and queue it for publishing
                 container.push_event(new_event);
 
                 let aggregate_id = container.aggregate.id().entity_id().to_owned();

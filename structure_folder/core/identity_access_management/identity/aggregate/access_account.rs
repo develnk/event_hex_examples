@@ -24,14 +24,14 @@ pub struct AccessAccountAggregateRoot {
     pub user: User,
     pub roles: Vec<Role>,
     pub permission: Vec<Permissions>,
-    // Текущая версия агрегата (количество примененных событий)
+    // Current aggregate version (number of applied events)
     version: u32,
 }
 
 impl AccessAccountAggregateRoot {
-    // Метод для создания нового агрегата
+    // Method for creating a new aggregate
     pub async fn new_access_account(&mut self, first_name: String, last_name: String, email: String) -> Result<AccessAccountEvents, DomainError> {
-        // Внутри Email проверяются инварианты
+        // Inside Email invariants are checked
         let email_vo = Email::new(&self, email, "AccessAccountCreatedV1".to_string())?;
 
         let event = AccessAccountEvents::Created(AccessAccountCreateVersioned::new_v1(

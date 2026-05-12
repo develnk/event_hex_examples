@@ -1,5 +1,5 @@
 /*
-  Сервисы приложения в которых должны быть реализованы Саги.
+  Application services in which Sagas should be implemented.
   @author Nikolay
 */
 pub mod handler;

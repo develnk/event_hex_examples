@@ -1,7 +1,7 @@
 /*
-* Исходящий порт(Outgoing Port). Определяется что нужно домену от внешнего мира.
-* Реализуется в Outgoing Adapter в инфраструктуром слое.
-* Эти порты используются Application слоем через сервисы.
+* Outgoing Port. Defines what the domain needs from the outside world.
+* Implemented in Outgoing Adapter in the infrastructure layer.
+* These ports are used by the Application layer through services.
 */
 pub mod external_service_ports;
 pub mod message_bus_ports;

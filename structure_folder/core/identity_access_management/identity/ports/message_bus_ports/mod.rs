@@ -1,3 +1,3 @@
 /*
-* Порт для событий и сообщений.
+* Port for events and messages.
 */

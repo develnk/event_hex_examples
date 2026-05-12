@@ -1,7 +1,7 @@
 /*
-*  Контекст идентификации и доступа(IAM - Identity  Access Management). Отвечает за аутентификацию, авторизацию и привязку внешних
-*  идентификаторов к внутренним сущностям. Это критически важный вспомогательный слой, который защищает ядро системы.
-*  IAM Context: Содержит логины, хеши паролей, токены, привязки к Telegram/Discord ID и роли. Его задача — ответить на вопрос «Кто это?» и «Что ему можно?»
+*  Identity and Access Management Context (IAM). Responsible for authentication, authorization, and binding external
+*  identifiers to internal entities. This is a critically important auxiliary layer that protects the system core.
+*  IAM Context: Contains logins, password hashes, tokens and roles. Its job is to answer "Who is this?" and "What are they allowed to do?"
 */
 pub mod identity;
 pub mod service;

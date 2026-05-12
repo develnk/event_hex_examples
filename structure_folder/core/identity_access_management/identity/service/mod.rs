@@ -1,12 +1,12 @@
 /*
-*
-   Доменные сервисы.
-   Используются для:
-     Координации между несколькими Агрегатами, когда логика не может быть размещена ни в одном из них.
-     Реализации сложной бизнес-логики, которая не привязана к состоянию конкретной сущности или агрегата.
+ *
+   Domain services.
+   Used for:
+     Coordination between multiple Aggregates when logic cannot be placed in any single one.
+     Implementing complex business logic that is not tied to the state of a specific entity or aggregate.
 
-Пример: Сервис TransferService в банковском домене, который координирует списание со Счета A и зачисление на Счет B.
-Важно: Доменные Сервисы не должны зависеть от infrastructure (БД, HTTP) или даже от application (команд/запросов).
-  Они могут зависеть только от других элементов домена (Entities, Value Objects, Domain Events, Domain Services).
+Example: The TransferService in a banking domain, which coordinates debiting from Account A and crediting to Account B.
+Important: Domain Services must not depend on infrastructure (DB, HTTP) or even application (commands/queries).
+  They may only depend on other domain elements (Entities, Value Objects, Domain Events, Domain Services).
 */
 pub mod access_account_domain_service;

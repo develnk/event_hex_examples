@@ -15,7 +15,7 @@ pub async fn init() {
     let settings = get_app_settings();
     let client = get_mongodb_client(settings.database.clone()).await;
 
-    // Для проверки соединения с базой
+    // To check database connection
     let database = client.database("admin");
     let ping_command = doc! { "ping": 1 };
     // Send a ping to confirm a successful connection
@@ -40,7 +40,7 @@ async fn get_mongodb_client(db_settings: DbCredentials) -> Arc<Client> {
             let credential = Credential::builder()
                 .username(Some(db_settings.username))
                 .password(Some(db_settings.password))
-                .source(Some("admin".to_string())) // База, где создан пользователь
+                .source(Some("admin".to_string())) // Database where the user was created
                 .build();
 
             client_options.read_concern = Some(ReadConcernLevel::Majority.into());

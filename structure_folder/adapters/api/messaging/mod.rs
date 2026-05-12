@@ -1,3 +1,3 @@
 /*
-* Адаптеры для очередей сообщений.
+* Adapters for message queues.
 */

@@ -1,7 +1,7 @@
 /*
-* Логика выборки данных для Query Handlers
-* Хендлеры запросов (QueryHandlers) находящиеся в application, вызывают адаптеры чтения,
-* находящиеся в этой папке.
+* Data retrieval logic for Query Handlers
+* Query Handlers located in the application layer call the read adapters
+* located in this folder.
 */
 
 pub mod access_account_projection;

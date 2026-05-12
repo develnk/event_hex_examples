@@ -10,7 +10,7 @@ pub async fn command_bus_init() {
     let _ = COMMAND_BUS.set(Arc::new(CommandBus::new()));
     let command_bus = get_command_bus();
     let client = get_initialized_mongodb_client().await;
-    // Регистрация обработчиков команд
+    // Register command handlers
     command_bus
         .register::<AccessAccountCommand, _>(AccessAccountHandlerFactory::new(client.clone()))
         .await;

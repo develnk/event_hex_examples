@@ -1,11 +1,11 @@
 /*
- * В этом пакете находятся События доменной модели (Domain Events) которые в себе содержат любые типы изменения состояния как агрегата,
- * так и сущности в ограниченном контексте.
- * Событие (Event) в ограниченном контексте - это любая операция, которая публикует изменения состояния агрегата
- * ограниченного контекста как событие.
- * Например, Команды (Commands) изменяют состояние агрегата, поэтому действие любой команды в ограниченном контексте
- * приводит к возникновению соответствующего события. Подписчиками этих событий могут быть другие ограниченные контексты,
- * принадлежащие каким-либо другим внешним предметным областям (доменам).
+ * This package contains Domain Events which include any types of state changes for both the aggregate
+ * and the entity within the bounded context.
+ * An Event in a bounded context is any operation that publishes aggregate state changes
+ * of the bounded context as an event.
+ * For example, Commands change the aggregate state, so the action of any command in the bounded context
+ * leads to the generation of a corresponding event. Subscribers to these events can be other bounded contexts,
+ * belonging to some other external domains.
  *
  * @author Nikolay
  */

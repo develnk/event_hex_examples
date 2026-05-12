@@ -30,7 +30,7 @@ impl AppSettings {
 
         let app_settings: AppSettings = config.try_deserialize()?;
         let _ = GLOBAL_SETTINGS.set(Arc::new(app_settings.to_owned()));
-        println!("Настройки успешно загружены:");
+        println!("Settings loaded successfully:");
         println!("{:#?}", app_settings);
         Ok(())
     }

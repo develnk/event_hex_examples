@@ -1,5 +1,5 @@
 /*
-    Реализация входящих портов для команд.
+    Implementation of inbound ports for commands.
     @author Nikolay
 */
 

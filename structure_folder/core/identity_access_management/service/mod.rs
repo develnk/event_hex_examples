@@ -1,3 +1,3 @@
 /*
-   Реализации доменных сервисов (интерфейсы определены в domain/service/).
+   Implementations of domain services (interfaces defined in domain/service/).
 */

@@ -1,3 +1,3 @@
 /*
-* Порты для внешних сервисов
+* Ports for external services
 */

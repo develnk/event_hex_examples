@@ -1,3 +1,3 @@
 /*
-* Порт для работы с данными которые надо сохранить.
+* Port for working with data that needs to be persisted.
 */

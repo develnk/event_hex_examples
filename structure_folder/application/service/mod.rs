@@ -1,41 +1,41 @@
 /*
-   Прикладные сервисы (Application Service).
-   1. Определение и реализация вариантов использования (Use Cases):
-      Прикладной сервис представляет собой конкретный сценарий взаимодействия пользователя или другой системы с приложением.
-      Например, "Создать заказ", "Зарегистрировать пользователя", "Обработать платеж". Каждая публичная операция прикладного
-      сервиса соответствует одному варианту использования.
-   2. Оркестровка доменной логики:
-      Прикладной сервис координирует вызовы к объектам Домена (например, загружает агрегат из репозитория,
-      вызывает его метод, сохраняет изменения через репозиторий) для выполнения конкретного варианта использования.
-   3. Управление транзакциями:
-      Прикладные сервисы часто отвечают за начало и завершение транзакционных границ, гарантируя
-      атомарность операций, затрагивающих несколько объектов домена или инфраструктурных ресурсов.
-   4. Взаимодействие со Слоем Инфраструктуры:
-      Они могут использовать сервисы из Слоя Инфраструктуры для выполнения задач, необходимых для
-      варианта использования, но не являющихся частью доменной логики (например, отправка email после регистрации, логирование,
-      взаимодействие с внешней платежной системой).
-   5. Выступают в роли API для Домена:
-      Прикладные сервисы предоставляют четкий и понятный интерфейс для взаимодействия со Слоем Домена
-      извне (из Слоя Представления/UI, других систем через API). Они скрывают внутреннюю структуру Домена от внешнего мира.
-      Координируют вызовы к Доменным Объектам (включая Доменные Сервисы) и Инфраструктурным Сервисам. Управляют транзакционными границами.
+   Application Services.
+   1. Definition and implementation of Use Cases:
+      An application service represents a specific interaction scenario of a user or another system with the application.
+      For example, "Create Order", "Register User", "Process Payment". Each public operation of an application
+      service corresponds to one use case.
+   2. Domain Logic Orchestration:
+      The application service coordinates calls to Domain objects (e.g., loads an aggregate from the repository,
+      calls its method, saves changes through the repository) to execute a specific use case.
+   3. Transaction Management:
+      Application services are often responsible for starting and completing transaction boundaries, ensuring
+      atomicity of operations involving multiple domain objects or infrastructure resources.
+   4. Interaction with the Infrastructure Layer:
+      They may use services from the Infrastructure Layer to perform tasks necessary for the
+      use case but not part of the domain logic (e.g., sending an email after registration, logging,
+      interaction with an external payment system).
+   5. Act as an API for the Domain:
+      Application services provide a clear and understandable interface for interacting with the Domain Layer
+      from the outside (from the Presentation/UI Layer, other systems via API). They hide the internal structure of the Domain from the outside world.
+      Coordinate calls to Domain Objects (including Domain Services) and Infrastructure Services. Manage transactional boundaries.
 
-   Прикладные сервисы являются ключевым элементом Слоя Приложения, отвечающим за координацию выполнения
-   конкретных пользовательских сценариев, выступая в роли фасада к Слою Домена.
-   Может выполнять базовую валидацию входящих данных (хотя более глубокая валидация часто находится в домене или в команде).
-   Не содержат сложной бизнес-логики сами по себе (делегируют ее домену).
+   Application services are a key element of the Application Layer, responsible for coordinating the execution
+   of specific user scenarios, acting as a facade to the Domain Layer.
+   They may perform basic validation of incoming data (although deeper validation is often in the domain or command).
+   They do not contain complex business logic themselves (delegate it to the domain).
 
-   Вариант использования:
-   *   Начинает транзакцию/единицу работы (Unit of Work).
-   *   Может выполнить проверки безопасности или базовую валидацию команды.
-   *   Находит соответствующий Обработчик команд для полученного типа команды (PlaceOrderCommand).
-       Это часто делается с помощью паттерна Mediator или Command Bus. Прикладной сервис имеет
-       зависимость от IMediator или ICommandBus, а не от конкретных обработчиков. Он просто говорит
-       "выполни эту команду", а посредник находит нужный обработчик.
-   *   Делегирует выполнение команды Обработчику команд, вызывая его метод Handle(command).
-   *   После того как Обработчик команд(Command Handler) успешно завершил свою работу, Прикладной
-       сервис фиксирует транзакцию. Если в процессе произошла ошибка, он откатывает транзакцию.
-   *   Может опубликовать доменные события, которые были сгенерированы агрегатами в процессе выполнения
-       команды (часто с помощью Издателя доменных событий, который также координируется Прикладным сервисом после фиксации транзакции).
-   *   Возвращает результат (успех/ошибка, ID созданного заказа и т.д.) обратно на уровень представления.
+   Use case:
+   *   Starts a transaction/unit of work.
+   *   May perform security checks or basic command validation.
+   *   Finds the appropriate Command Handler for the received command type (PlaceOrderCommand).
+       This is often done using the Mediator or Command Bus pattern. The application service has a
+       dependency on IMediator or ICommandBus, not on specific handlers. It simply says
+       "execute this command", and the mediator finds the appropriate handler.
+   *   Delegates command execution to the Command Handler, calling its Handle(command) method.
+   *   After the Command Handler has successfully completed its work, the Application
+       service commits the transaction. If an error occurred during the process, it rolls back the transaction.
+   *   May publish domain events that were generated by aggregates during command
+       execution (often via the Domain Event Publisher, which is also coordinated by the Application service after transaction commit).
+   *   Returns the result (success/error, created order ID, etc.) back to the presentation layer.
 */
 pub mod identity_service;

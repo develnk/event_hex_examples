@@ -1,5 +1,5 @@
 /*
-  Реализация входящих портов для запросов
+  Implementation of inbound ports for queries
   @author Nikolay
 */
 

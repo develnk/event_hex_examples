@@ -1,5 +1,5 @@
 /**
- * Содержит модель предметной области (домена) ограниченного контекста.
+ * Contains the domain model of the bounded context.
  *
  * @author Nikolay
  */

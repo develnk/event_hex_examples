@@ -1,4 +1,4 @@
 /*
-*  Структуры Read Models.
+*  Read Models structures.
 */
 pub mod access_account;

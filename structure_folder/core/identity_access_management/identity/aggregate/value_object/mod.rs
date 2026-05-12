@@ -1,7 +1,7 @@
 /*
- *  Этот пакет содержит Объекты-значений(Value Objects) связанные с корневым агрегатом.
- *  Объекты-значения(Value Objects) не обладают собственной идентичностью и с лёгкостью заменяемы в любом экземпляре
- *  корневого агрегата или сущности.
+ *  This package contains Value Objects related to the root aggregate.
+ *  Value Objects do not have their own identity and are easily replaceable in any instance
+ *  of the root aggregate or entity.
  *
  * @author Nikolay
  */
