@@ -9,7 +9,7 @@ path = "structure_folder/main.rs"
 required-features = []
 
 [dependencies]
-tokio = { version = "1.52.3", features = ["full"], optional = true }
+tokio = { version = "1.52.3", features = ["full"] }
 serde_json = "1.0.149"
 serde = { version = "1.0.228", features = ["derive", "serde_derive"] }
 serde_with = { version = "3.18.0" }
@@ -35,7 +35,7 @@ rdkafka = { version = "0.39.0", features = ["ssl-vendored"], optional = true }
 lapin = { version = "4.7.2", optional = true }
 dotenvy = "0.15.7"
 config = "0.15.22"
+thiserror = "2.0.18"
 
 [dev-dependencies]
-tokio = { version = "1.52.3", features = ["full"] }
 mockall = "0.14"

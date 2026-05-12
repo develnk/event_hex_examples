@@ -44,8 +44,7 @@ impl AccessAccountAggregateRoot {
         Ok(event)
     }
 
-    pub async fn update_access_account(
-        &mut self, roles: Vec<Role>, permission: Vec<Permissions>) -> Result<AccessAccountEvents, DomainError> {
+    pub async fn update_access_account(&mut self, roles: Vec<Role>, permission: Vec<Permissions>) -> Result<AccessAccountEvents, DomainError> {
         let event = AccessAccountEvents::Updated(AccessAccountUpdateVersioned::new_v1(self.id().entity_id().to_owned(), roles, permission));
         Ok(event)
     }

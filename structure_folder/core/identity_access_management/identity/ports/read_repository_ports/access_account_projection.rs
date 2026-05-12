@@ -1,15 +1,15 @@
 use async_trait::async_trait;
 use event_hex::shared_kernel::domain::EntityId;
-use event_hex::shared_kernel::errors::EventHexError;
 use uuid::Uuid;
 
 use crate::application::ports::projections::models::access_account::AccessAccountProjection;
+use crate::shared_kernel::errors::AppError;
 
 #[async_trait]
 pub trait AccessAccountReadProjectionRepository: Send + Sync {
-    async fn get_projection(&self, id: &EntityId) -> Result<Option<AccessAccountProjection>, EventHexError>;
-    async fn find_projection_by_user_id(&self, user_id: Uuid) -> Result<Option<AccessAccountProjection>, EventHexError>;
-    async fn find_projection_by_email(&self, email: String) -> Result<Option<AccessAccountProjection>, EventHexError>;
+    async fn get_projection(&self, id: &EntityId) -> Result<Option<AccessAccountProjection>, AppError>;
+    async fn find_projection_by_user_id(&self, user_id: Uuid) -> Result<Option<AccessAccountProjection>, AppError>;
+    async fn find_projection_by_email(&self, email: String) -> Result<Option<AccessAccountProjection>, AppError>;
 }
 
 //==============================================================================================
@@ -33,15 +33,15 @@ impl Default for MockAccessAccountProjectionRepo {
 
 #[async_trait]
 impl AccessAccountReadProjectionRepository for MockAccessAccountProjectionRepo {
-    async fn get_projection(&self, _id: &EntityId) -> Result<Option<AccessAccountProjection>, EventHexError> {
+    async fn get_projection(&self, _id: &EntityId) -> Result<Option<AccessAccountProjection>, AppError> {
         Ok(None)
     }
 
-    async fn find_projection_by_user_id(&self, _user_id: Uuid) -> Result<Option<AccessAccountProjection>, EventHexError> {
+    async fn find_projection_by_user_id(&self, _user_id: Uuid) -> Result<Option<AccessAccountProjection>, AppError> {
         Ok(None)
     }
 
-    async fn find_projection_by_email(&self, _email: String) -> Result<Option<AccessAccountProjection>, EventHexError> {
+    async fn find_projection_by_email(&self, _email: String) -> Result<Option<AccessAccountProjection>, AppError> {
         Ok(None)
     }
 }

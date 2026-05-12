@@ -3,9 +3,9 @@ use std::sync::Arc;
 use crate::adapters::persistence::mongodb::projections::dto::access_account_projection_dto::AccessAccountProjectionDto;
 use crate::application::ports::projections::models::access_account::AccessAccountProjection;
 use crate::core::identity_access_management::identity::ports::read_repository_ports::access_account_projection::AccessAccountReadProjectionRepository;
+use crate::shared_kernel::errors::AppError;
 use async_trait::async_trait;
 use event_hex::shared_kernel::domain::EntityId;
-use event_hex::shared_kernel::errors::EventHexError;
 use mongodb::bson::doc;
 use mongodb::{Client, Collection};
 use uuid::Uuid;
@@ -29,10 +29,10 @@ impl MongoAccessAccountReadProjectionAdapter {
 impl AccessAccountReadProjectionRepository for MongoAccessAccountReadProjectionAdapter {
     async fn get_projection(
         &self, id: &EntityId,
-    ) -> Result<Option<AccessAccountProjection>, EventHexError> {
+    ) -> Result<Option<AccessAccountProjection>, AppError> {
         let filter = doc! { "_id": id.as_uuid()};
         let account =
-            self.collection.find_one(filter).await.map_err(|e| EventHexError::MongoError(e.into()))?;
+            self.collection.find_one(filter).await.map_err(|e| AppError::MongoError(e.into()))?;
 
         match account {
             Some(p) => Ok(Some(AccessAccountProjection::from(p))),
@@ -42,10 +42,10 @@ impl AccessAccountReadProjectionRepository for MongoAccessAccountReadProjectionA
 
     async fn find_projection_by_user_id(
         &self, user_id: Uuid,
-    ) -> Result<Option<AccessAccountProjection>, EventHexError> {
+    ) -> Result<Option<AccessAccountProjection>, AppError> {
         let filter = doc! {"user.id": user_id};
         let account =
-            self.collection.find_one(filter).await.map_err(|e| EventHexError::MongoError(e.into()))?;
+            self.collection.find_one(filter).await.map_err(|e| AppError::MongoError(e.into()))?;
 
         match account {
             Some(p) => Ok(Some(AccessAccountProjection::from(p))),
@@ -54,10 +54,10 @@ impl AccessAccountReadProjectionRepository for MongoAccessAccountReadProjectionA
     }
     async fn find_projection_by_email(
         &self, email: String,
-    ) -> Result<Option<AccessAccountProjection>, EventHexError> {
+    ) -> Result<Option<AccessAccountProjection>, AppError> {
         let filter = doc! {"user.email": email};
         let account =
-            self.collection.find_one(filter).await.map_err(|e| EventHexError::MongoError(e.into()))?;
+            self.collection.find_one(filter).await.map_err(|e| AppError::MongoError(e.into()))?;
 
         match account {
             Some(p) => Ok(Some(AccessAccountProjection::from(p))),

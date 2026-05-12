@@ -1,0 +1,7 @@
+logging_level = "INFO"
+
+[database]
+url = "mongodb://localhost:27018,localhost:27019,localhost:27020/test?replicaSet=rs0&authSource=admin&retryWrites=true"
+username = "root"
+password = "root"
+dbname = "test"

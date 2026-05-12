@@ -6,7 +6,8 @@ use async_trait::async_trait;
 use event_hex::application::ports::domain_event_handlers::{ProjectionUpdaterEventHandler, ProjectionUpdaterEventHandlerFactory};
 use event_hex::shared_kernel::domain_event::{DomainEventHandler, DomainEventHandlerFactory};
 use event_hex::shared_kernel::errors::DomainEventHandlerError;
-use std::sync::{Arc, RwLock};
+use std::sync::Arc;
+use tokio::sync::RwLock;
 
 //-------------------------------------------------------------------------------------------------------
 #[async_trait]
@@ -17,9 +18,11 @@ impl DomainEventHandler<AccessAccountEvents> for ProjectionUpdaterEventHandler {
             AccessAccountEvents::Updated(e) => e.id(),
         };
 
-        // Используем деструктуризацию для получения доступа к репозиторию
-        let mut repo_guard = self.repository.write().unwrap();
-        if let Err(e) = repo_guard.apply_event(id, event).await {}
+        // Use destructuring to access the repository.
+        let mut repo_guard = self.repository.write().await;
+        if let Err(e) = repo_guard.apply_event(id, event).await {
+            //TODO logging error
+        }
     }
 }
 
@@ -27,8 +30,9 @@ impl DomainEventHandler<AccessAccountEvents> for ProjectionUpdaterEventHandler {
 impl DomainEventHandlerFactory<AccessAccountEvents> for ProjectionUpdaterEventHandlerFactory {
     async fn create(&self) -> Result<Box<dyn DomainEventHandler<AccessAccountEvents>>, DomainEventHandlerError> {
         let client = get_initialized_mongodb_client().await;
+        let db_name = "example";
         let repository =
-            Arc::new(RwLock::new(MongoAccessAccountProjectionAdapter::new(client, "example").await?));
+            Arc::new(RwLock::new(MongoAccessAccountProjectionAdapter::new(client, db_name).await?));
         Ok(Box::new(ProjectionUpdaterEventHandler::new(repository)))
     }
 }
